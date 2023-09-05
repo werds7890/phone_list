@@ -45,18 +45,18 @@
             app:layout_constraintTop_toTopOf="parent" />
         </FrameLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="36dp"
-            android:layout_marginBottom="36dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/dialog_user_img"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:visibility="visible"
-            />
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/floatingActionButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="36dp"-->
+<!--            android:layout_marginBottom="36dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:src="@drawable/dialog_user_img"-->
+<!--            tools:ignore="SpeakableTextPresentCheck"-->
+<!--            android:visibility="visible"-->
+<!--            />-->
 
 
 
