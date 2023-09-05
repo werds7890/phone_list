@@ -23,7 +23,11 @@ class ContactListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: ContactListViewBinding
+
+    val dataList = mutableListOf<ContactListFragmentData>()
+
+    private var _binding : ContactListViewBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,24 +42,29 @@ class ContactListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = ContactListViewBinding.inflate(inflater, container, false) // Binding 초기화
+        _binding = ContactListViewBinding.inflate(inflater, container, false) // Binding 초기화
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataList = mutableListOf<ContactListFragmentData>()
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.sn_1, aname = "써니"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.hy, aname = "효연"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.ty, aname = "태연"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.yr, aname = "유리"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.js, aname = "제시카"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.tp, aname = "티파니"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.sh, aname = "서현"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.ya, aname = "윤아"))
-        dataList.add(ContactListFragmentData(profileImage = R.drawable.sy, aname = "수영"))
+
+        dataList.add(ContactListFragmentData(R.drawable.sn_1, "써니","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.hy,  "효연","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.ty, "태연","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.yr,  "유리","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.js,  "제시카","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.tp, "티파니","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.sh, "서현","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.ya, "윤아","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.sy,"수영","01012345678","abcd1234@gamil.com",false))
 
         binding.recyclerView1.adapter = ContactListFragmentAdapter(dataList)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 
