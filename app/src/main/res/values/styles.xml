@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DialogButtonStyle" parent="ThemeOverlay.Material3.Button">
+        <item name="backgroundTint">@color/light_grey</item>
+        <item name="strokeColor">@color/button_stroke</item>
+        <item name="strokeWidth">3dp</item>
+    </style>
+
+</resources>
