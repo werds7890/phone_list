@@ -37,7 +37,6 @@ class ContactDetailFragment : Fragment() {
             val number=it.getString("phoneNum")
             val email=it.getString("eMail")
             val like=it.getBoolean("like")
-            Log.v("test","${name}")
 
             binding.detailName.text=name
             binding.detailImg.setImageResource(img)
