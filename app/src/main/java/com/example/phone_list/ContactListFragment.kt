@@ -1,10 +1,12 @@
 package com.example.phone_list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.phone_list.databinding.ContactListViewBinding
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +23,7 @@ class ContactListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: ContactListViewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +38,26 @@ class ContactListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.contact_list_view, container, false)
+        binding = ContactListViewBinding.inflate(inflater, container, false) // Binding 초기화
+        return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val dataList = mutableListOf<ContactListFragmentData>()
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.sn_1, aname = "써니"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.hy, aname = "효연"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.ty, aname = "태연"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.yr, aname = "유리"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.js, aname = "제시카"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.tp, aname = "티파니"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.sh, aname = "서현"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.ya, aname = "윤아"))
+        dataList.add(ContactListFragmentData(profileImage = R.drawable.sy, aname = "수영"))
+
+        binding.recyclerView1.adapter = ContactListFragmentAdapter(dataList)
+    }
+
 
     companion object {
         /**
@@ -55,6 +76,7 @@ class ContactListFragment : Fragment() {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
+
             }
     }
 }

@@ -1,12 +1,11 @@
 package com.example.phone_list
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.phone_list.databinding.ActivityMainContactBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainContactActivity : AppCompatActivity() {
-
     private val binding by lazy { ActivityMainContactBinding.inflate(layoutInflater) }
 
     private val tabTitleArray = arrayOf(
@@ -29,5 +28,7 @@ class MainContactActivity : AppCompatActivity() {
             tab, position -> tab.text = tabTitleArray[position]
             tab.icon = getDrawable(tabIconArray[position])
         }.attach()
+
+
+        }
     }
-}
