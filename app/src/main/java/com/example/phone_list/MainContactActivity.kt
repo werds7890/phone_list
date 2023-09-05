@@ -30,10 +30,10 @@ class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListene
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.floatingActionButton.setOnClickListener {
-            val addDialog = ShowDialogFragment()
-            addDialog.show(supportFragmentManager,"add_dialog")
-        }
+//        binding.floatingActionButton.setOnClickListener {
+//            val addDialog = ShowDialogFragment()
+//            addDialog.show(supportFragmentManager,"add_dialog")
+//        }
 
         var viewPager = binding.viewpager
         var tabLayout = binding.tabLayout
