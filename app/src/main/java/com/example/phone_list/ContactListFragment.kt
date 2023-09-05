@@ -1,10 +1,12 @@
 package com.example.phone_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.phone_list.databinding.ContactListViewBinding
 
 
@@ -31,10 +33,6 @@ class ContactListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -49,18 +47,44 @@ class ContactListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        dataList.add(ContactListFragmentData(R.drawable.sn_1, "써니","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.hy,  "효연","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.ty, "태연","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.yr,  "유리","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.js,  "제시카","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.tp, "티파니","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.sh, "서현","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.ya, "윤아","01012345678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.sy,"수영","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.sn_1, "써니","010-1212-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.hy,  "효연","010-2323-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.ty, "태연","010-3434-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.yr,  "유리","010-4545-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.js,  "제시카","010-5656-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.tp, "티파니","010-6767-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.sh, "서현","010-7878-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.ya, "윤아","010-8989-5678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.sy,"수영","010-9090-5678","abcd1234@gamil.com",false))
 
-        binding.recyclerView1.adapter = ContactListFragmentAdapter(dataList)
+        val adapter = ContactListFragmentAdapter(dataList)
+        binding.recyclerView1.adapter=adapter
+        binding.recyclerView1.layoutManager= LinearLayoutManager(requireContext())
+
+        val detailFrag=ContactDetailFragment()
+
+        adapter.itemClick=object : ContactListFragmentAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                Log.v("test","click!!")
+                val bundle=Bundle()
+                bundle.putInt("img",dataList[position].profileImage)
+                bundle.putString("name",dataList[position].aname)
+                bundle.putString("phoneNum",dataList[position].userPhoneNum)
+                bundle.putString("eMail",dataList[position].userEmail)
+                bundle.putBoolean("like",dataList[position].userIsLiked)
+
+                val fragmentManager=requireActivity().supportFragmentManager
+                val transaction=fragmentManager.beginTransaction()
+                transaction.addToBackStack(null)
+                transaction.replace(R.id.contact_Main,detailFrag)
+                detailFrag.arguments=bundle
+                transaction.commit()
+            }
+        }
+
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
