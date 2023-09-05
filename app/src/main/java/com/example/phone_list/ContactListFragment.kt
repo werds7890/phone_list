@@ -5,8 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.FragmentManager
 import com.example.phone_list.databinding.ContactListViewBinding
 
 
@@ -28,11 +32,28 @@ class ContactListFragment : Fragment() {
 
     val dataList = mutableListOf<ContactListFragmentData>()
 
+    init {
+        dataList.add(ContactListFragmentData(R.drawable.sn_1, "써니","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.hy,  "효연","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.ty, "태연","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.yr,  "유리","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.js,  "제시카","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.tp, "티파니","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.sh, "서현","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.ya, "윤아","01012345678","abcd1234@gamil.com",false))
+        dataList.add(ContactListFragmentData(R.drawable.sy,"수영","01012345678","abcd1234@gamil.com",false))
+
+    }
+
     private var _binding : ContactListViewBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
     }
 
     override fun onCreateView(
@@ -41,21 +62,23 @@ class ContactListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = ContactListViewBinding.inflate(inflater, container, false) // Binding 초기화
+
+        val bundle = arguments
+        if (bundle != null) {
+            val addName = bundle.getString(DataKey.ADD_USER_NAME_KEY)
+            val addNum = bundle.getString(DataKey.ADD_USER_NUM_KEY)
+            val addEmail = bundle.getString(DataKey.ADD_USER_EMAIL_KEY)
+            val addImg = bundle.getInt(DataKey.ADD_USER_IMG_INT_KEY,R.drawable.dialog_user_img)
+            val addIsLiked = bundle.getBoolean(DataKey.ADD_USER_ISLIKED_BOOLEAN_KEY,false)
+            dataList.add(ContactListFragmentData(addImg,addName!!,addNum!!,addEmail!!,addIsLiked))
+        }
+
+
+
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        dataList.add(ContactListFragmentData(R.drawable.sn_1, "써니","010-1212-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.hy,  "효연","010-2323-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.ty, "태연","010-3434-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.yr,  "유리","010-4545-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.js,  "제시카","010-5656-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.tp, "티파니","010-6767-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.sh, "서현","010-7878-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.ya, "윤아","010-8989-5678","abcd1234@gamil.com",false))
-        dataList.add(ContactListFragmentData(R.drawable.sy,"수영","010-9090-5678","abcd1234@gamil.com",false))
 
         val adapter = ContactListFragmentAdapter(dataList)
         binding.recyclerView1.adapter=adapter
@@ -83,8 +106,6 @@ class ContactListFragment : Fragment() {
         }
 
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

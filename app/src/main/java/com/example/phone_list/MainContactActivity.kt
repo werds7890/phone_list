@@ -1,11 +1,13 @@
 package com.example.phone_list
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import com.example.phone_list.databinding.ActivityMainContactBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MainContactActivity : AppCompatActivity() {
+class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListener {
     private val binding by lazy { ActivityMainContactBinding.inflate(layoutInflater) }
 
     private val tabTitleArray = arrayOf(
@@ -15,20 +17,32 @@ class MainContactActivity : AppCompatActivity() {
         R.drawable.bottom_nav_contact_icon_24,
         R.drawable.bottom_nav_mypage_icon_24
     )
+
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        Toast.makeText(dialog.context,"저장 됨", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        Toast.makeText(dialog.context,"취소 됨", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.floatingActionButton.setOnClickListener {
+            val addDialog = ShowDialogFragment()
+            addDialog.show(supportFragmentManager,"add_dialog")
+        }
 
         var viewPager = binding.viewpager
         var tabLayout = binding.tabLayout
 
         viewPager.adapter = ViewPagerAdapter(this)
 
-        TabLayoutMediator(tabLayout,viewPager){
-            tab, position -> tab.text = tabTitleArray[position]
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = tabTitleArray[position]
             tab.icon = getDrawable(tabIconArray[position])
         }.attach()
-
-
-        }
     }
+}
