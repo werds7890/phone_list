@@ -57,7 +57,7 @@ class ShowDialogFragment:DialogFragment() {
             }
             dismiss()
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main_contact_frame_layout,contactListFragment)
+                .replace(R.id.main_contact_constraint_layout,contactListFragment)
                 .setReorderingAllowed(true)
                 .addToBackStack(null)
                 .commit()

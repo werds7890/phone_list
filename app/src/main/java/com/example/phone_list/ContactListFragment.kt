@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.fragment.app.FragmentManager
 import com.example.phone_list.databinding.ContactListViewBinding
 
@@ -47,7 +48,6 @@ class ContactListFragment : Fragment() {
     private var _binding : ContactListViewBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,7 +55,6 @@ class ContactListFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,15 +77,35 @@ class ContactListFragment : Fragment() {
 
         return binding.root
     }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView1.adapter = ContactListFragmentAdapter(dataList)
+        val adapter = ContactListFragmentAdapter(dataList)
+        binding.recyclerView1.adapter=adapter
+        binding.recyclerView1.layoutManager= LinearLayoutManager(requireContext())
+
+        val detailFrag=ContactDetailFragment()
+
+        adapter.itemClick=object : ContactListFragmentAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                Log.v("test","click!!")
+                val bundle=Bundle()
+                bundle.putInt("img",dataList[position].profileImage)
+                bundle.putString("name",dataList[position].aname)
+                bundle.putString("phoneNum",dataList[position].userPhoneNum)
+                bundle.putString("eMail",dataList[position].userEmail)
+                bundle.putBoolean("like",dataList[position].userIsLiked)
+
+                val fragmentManager=requireActivity().supportFragmentManager
+                val transaction=fragmentManager.beginTransaction()
+                transaction.addToBackStack(null)
+                transaction.replace(R.id.contact_Main,detailFrag)
+                detailFrag.arguments=bundle
+                transaction.commit()
+            }
+        }
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
