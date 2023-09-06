@@ -8,7 +8,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 private const val FRAG_NUMS = 2
 
 class ViewPagerAdapter(fragmentActivity:FragmentActivity):FragmentStateAdapter(fragmentActivity) {
-//    val fragments = listOf<Fragment>(MyPageFragment(),ContactListFragment(),ShowDialogFragment())
     override fun getItemCount(): Int {
         return FRAG_NUMS
     }
