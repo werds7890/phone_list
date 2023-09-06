@@ -2,11 +2,14 @@ package com.example.phone_list
 
 import android.os.Bundle
 import android.util.Log
+import android.util.Log.e
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResult
 import com.example.phone_list.databinding.FragmentContactDetailBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -21,6 +24,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class ContactDetailFragment : Fragment() {
     private lateinit var binding : FragmentContactDetailBinding
+    private var position : Int= 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,6 +40,7 @@ class ContactDetailFragment : Fragment() {
             val img=it.getInt("img")
             val number=it.getString("phoneNum")
             val email=it.getString("eMail")
+            position=it.getInt("position")
             val like=it.getBoolean("like")
 
             binding.detailName.text=name
@@ -43,8 +48,59 @@ class ContactDetailFragment : Fragment() {
             binding.detailNumber.text=number
             binding.detailEmail.text=email
         }
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var name : String?=null
+        var number : String?=null
+        var eMail : String?=null
+        binding.detailModify.setOnClickListener {
+            binding.save.visibility=View.VISIBLE
+            binding.detailModify.visibility=View.INVISIBLE
+
+            binding.detailNumber.visibility=View.GONE
+            binding.editNumber.visibility=View.VISIBLE
+            binding.editNumber.setText(binding.detailNumber.text)
+
+            binding.detailName.visibility=View.GONE
+            binding.editName.visibility=View.VISIBLE
+            binding.editName.setText(binding.detailName.text)
+
+            binding.detailEmail.visibility=View.GONE
+            binding.editEmail.visibility=View.VISIBLE
+            binding.editEmail.setText(binding.detailEmail.text)
+        }
+        binding.save.setOnClickListener {
+            binding.detailNumber.visibility=View.VISIBLE
+            binding.editNumber.visibility=View.GONE
+            binding.detailNumber.text=binding.editNumber.text
+
+            binding.detailName.visibility=View.VISIBLE
+            binding.editName.visibility=View.GONE
+            binding.detailName.text=binding.editName.text
+
+            binding.detailEmail.visibility=View.VISIBLE
+            binding.editEmail.visibility=View.GONE
+            binding.detailEmail.text=binding.editEmail.text
+
+            eMail=binding.detailEmail.text.toString()
+            name=binding.detailName.text.toString()
+            number=binding.detailNumber.text.toString()
+
+            setFragmentResult("key",bundleOf(
+                "nameKey" to name,
+                "numberKey" to number,
+                "eMailKey" to eMail,
+                "positionKey" to position,
+            ))
+        }
+
+        binding.detailCancel.setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
+
     }
 
     companion object {
