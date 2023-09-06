@@ -135,10 +135,7 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
         val dialogResult = mutableListOf<String?>()
         setFragmentResultListener(DataKey.ADD_USER_NAME_KEY) { requestKey, bundle ->
             if (dialogResult.size < 3) {
@@ -198,6 +195,7 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
         binding.recyclerView1.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView1.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayout.VERTICAL))
 
+
         val detailFrag = ContactDetailFragment()
 
         adapter.itemClick = object : ContactListFragmentAdapter.ItemClick {
@@ -209,6 +207,7 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
                 bundle.putString("phoneNum", dataList[position].userPhoneNum)
                 bundle.putString("eMail", dataList[position].userEmail)
                 bundle.putBoolean("like", dataList[position].userIsLiked)
+                bundle.putInt("position",position)
 
                 val fragmentManager = requireActivity().supportFragmentManager
                 val transaction = fragmentManager.beginTransaction()
@@ -218,6 +217,16 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
                 transaction.commit()
             }
         }
+        setFragmentResultListener("key") {requestKey, bundle ->
+            val nameResult=bundle.getString("nameKey")
+            val numberResult=bundle.getString("numberKey")
+            val eMailResult=bundle.getString("eMailKey")
+            val positionResult=bundle.getInt("positionKey")
+            dataList[positionResult].aname=nameResult!!
+            dataList[positionResult].userEmail=eMailResult!!
+            dataList[positionResult].userPhoneNum=numberResult!!
+            adapter.notifyItemChanged(positionResult)
+        }
 
     }
 
@@ -225,7 +234,6 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
         super.onDestroyView()
         _binding = null
     }
-
 
     companion object {
         /**
