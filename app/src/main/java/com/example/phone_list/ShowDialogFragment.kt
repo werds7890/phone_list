@@ -40,6 +40,7 @@ class ShowDialogFragment : DialogFragment() {
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        isCancelable = false
         _binding = AddDialogBinding.inflate(LayoutInflater.from(context))
         return AlertDialog.Builder(requireContext())
             .setView(binding.root)

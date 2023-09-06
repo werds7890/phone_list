@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="DialogButtonStyle" parent="ThemeOverlay.Material3.Button">
+    <style name="DialogSaveButtonStyle" parent="ThemeOverlay.Material3.Button">
         <item name="backgroundTint">@color/theme_color</item>
         <item name="strokeColor">@color/button_stroke</item>
+        <item name="strokeWidth">3dp</item>
+    </style>
+
+    <style name="DialogCancelButtonStyle" parent="ThemeOverlay.Material3.Button">
+        <item name="backgroundTint">@color/white</item>
+        <item name="strokeColor">@color/theme_color</item>
         <item name="strokeWidth">3dp</item>
     </style>
 

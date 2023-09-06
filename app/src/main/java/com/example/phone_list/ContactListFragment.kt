@@ -120,7 +120,6 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
         )
 
     }
-
     override fun onDialogPositiveClick(dialog: DialogFragment) {
         Toast.makeText(dialog.context, "저장 됨", Toast.LENGTH_SHORT).show()
     }
