@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.phone_list.databinding.ItemListBinding
 
@@ -21,12 +22,27 @@ class ContactListFragmentAdapter(val mItems: MutableList<ContactListFragmentData
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
+        holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
         holder.iconImageView.setImageResource(mItems[position].profileImage)
         holder.name.text = mItems[position].aname
 
+        // LikeImageView에 대한 클릭 이벤트 처리
+        holder.likeImageView.setOnClickListener {
+            val clickedItem = mItems[position]
+            clickedItem.isLikeFilled = !clickedItem.isLikeFilled
+
+            if (clickedItem.isLikeFilled) {
+                holder.likeImageView.setImageResource(R.drawable.fill_heart_120)
+            } else {
+                holder.likeImageView.setImageResource(R.drawable.heart_120)
+            }
+
+            // 애니메이션 적용
+            val likePulseAnimation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.like_pulse)
+            holder.likeImageView.startAnimation(likePulseAnimation)
+        }
     }
 
     override fun getItemId(position: Int): Long {
@@ -40,7 +56,10 @@ class ContactListFragmentAdapter(val mItems: MutableList<ContactListFragmentData
     inner class Holder(val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
         val iconImageView = binding.itemListImgIcon
         val name = binding.itemListTextName
+        val likeImageView = binding.LikeImageView
 
 
     }
+
+
 }

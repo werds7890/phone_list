@@ -49,7 +49,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/item_list_img_like"
+        android:id="@+id/LikeImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="30dp"

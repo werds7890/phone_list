@@ -10,4 +10,5 @@ data class ContactListFragmentData(
     var userPhoneNum : String,
     var userEmail : String,
     var userIsLiked : Boolean,
+    var isLikeFilled: Boolean = false
 ):Parcelable
