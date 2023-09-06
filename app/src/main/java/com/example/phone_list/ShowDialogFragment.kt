@@ -4,22 +4,25 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import com.example.phone_list.databinding.AddDialogBinding
 
-class ShowDialogFragment:DialogFragment() {
+class ShowDialogFragment : DialogFragment() {
     private var _binding: AddDialogBinding? = null
     private val binding get() = _binding!!
 
     interface DialogListener {
-        fun onDialogPositiveClick(dialog:DialogFragment)
-        fun onDialogNegativeClick(dialog:DialogFragment)
+        fun onDialogPositiveClick(dialog: DialogFragment)
+        fun onDialogNegativeClick(dialog: DialogFragment)
     }
+
     private lateinit var listener: DialogListener
 
     override fun onAttach(context: Context) {
@@ -28,7 +31,7 @@ class ShowDialogFragment:DialogFragment() {
             listener = parentFragment?.let {
                 parentFragment as DialogListener
             } ?: context as DialogListener
-        }catch (e:ClassCastException){
+        } catch (e: ClassCastException) {
             throw ClassCastException(
                 (context.toString() + " 필수요소 구현안됨")
             )
@@ -49,16 +52,30 @@ class ShowDialogFragment:DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding.dialogBtnSave.setOnClickListener {
-            listener.onDialogPositiveClick(this)
+            if (binding.dialogUserName.text.isEmpty() || binding.dialogUserPhoneNumber.text.isEmpty() || binding.dialogUserEmail.text.isEmpty()) {
+                Toast.makeText(requireContext(), "이름, 번호, 이메일은 필수 입력사항입니다.", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                listener.onDialogPositiveClick(this)
+                Log.d("TAG", "is empty? : ${binding.dialogUserName.text.isEmpty()}")
+                val addName = binding.dialogUserName.text.toString()
+                val addNum = binding.dialogUserPhoneNumber.text.toString()
+                val addEmail = binding.dialogUserEmail.text.toString()
 
-            val addName = binding.dialogUserName.text.toString()
-            val addNum = binding.dialogUserPhoneNumber.text.toString()
-            val addEmail = binding.dialogUserEmail.text.toString()
-
-            setFragmentResult(DataKey.ADD_USER_NAME_KEY, bundleOf(DataKey.ADD_USER_NAME_KEY to addName))
-            setFragmentResult(DataKey.ADD_USER_NUM_KEY, bundleOf(DataKey.ADD_USER_NUM_KEY to addNum))
-            setFragmentResult(DataKey.ADD_USER_EMAIL_KEY, bundleOf(DataKey.ADD_USER_EMAIL_KEY to addEmail))
-            dismiss()
+                setFragmentResult(
+                    DataKey.ADD_USER_NAME_KEY,
+                    bundleOf(DataKey.ADD_USER_NAME_KEY to addName)
+                )
+                setFragmentResult(
+                    DataKey.ADD_USER_NUM_KEY,
+                    bundleOf(DataKey.ADD_USER_NUM_KEY to addNum)
+                )
+                setFragmentResult(
+                    DataKey.ADD_USER_EMAIL_KEY,
+                    bundleOf(DataKey.ADD_USER_EMAIL_KEY to addEmail)
+                )
+                dismiss()
+            }
         }
         binding.dialogBtnCancel.setOnClickListener {
             listener.onDialogNegativeClick(this)

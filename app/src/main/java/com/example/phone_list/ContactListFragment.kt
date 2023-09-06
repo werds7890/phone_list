@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResultListener
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.phone_list.databinding.ContactListViewBinding
 import kotlin.math.log
 
@@ -194,6 +196,7 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
         val adapter = ContactListFragmentAdapter(dataList)
         binding.recyclerView1.adapter = adapter
         binding.recyclerView1.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView1.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayout.VERTICAL))
 
         val detailFrag = ContactDetailFragment()
 
