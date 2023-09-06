@@ -22,7 +22,7 @@ class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListene
 
     fun replaceFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_contact_frame_layout,fragment)
+            .replace(R.id.contact_Main,fragment)
             .addToBackStack(null)
             .commit()
     }

@@ -12,7 +12,7 @@ import com.example.phone_list.databinding.FragmentMyPageBinding
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private var _binding : FragmentMyPageBinding? = null
+private var _binding: FragmentMyPageBinding? = null
 private val binding get() = _binding!!
 
 /**
@@ -41,7 +41,7 @@ class MyPageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMyPageBinding.inflate(inflater,container,false)
+        _binding = FragmentMyPageBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -52,11 +52,9 @@ class MyPageFragment : Fragment() {
             val fragmentC = MypageEditFragment()
             (requireActivity() as MainContactActivity).replaceFragment(fragmentC)
 
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main_contact_frame_layout,fragmentC)
-                .remove(this)
-                .commit()
-    }}
+//            Count.a = 1
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
