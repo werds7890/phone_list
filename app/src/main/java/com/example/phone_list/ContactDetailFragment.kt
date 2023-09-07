@@ -85,6 +85,9 @@ class ContactDetailFragment : Fragment() {
             binding.editEmail.visibility=View.GONE
             binding.detailEmail.text=binding.editEmail.text
 
+            binding.detailModify.visibility=View.VISIBLE
+            binding.save.visibility=View.GONE
+
             eMail=binding.detailEmail.text.toString()
             name=binding.detailName.text.toString()
             number=binding.detailNumber.text.toString()
