@@ -1,6 +1,7 @@
 package com.example.phone_list
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -12,6 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListener {
     private val binding by lazy { ActivityMainContactBinding.inflate(layoutInflater) }
 
+
     private val tabTitleArray = arrayOf(
         "연락처", "마이페이지"
     )
@@ -20,19 +22,13 @@ class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListene
         R.drawable.bottom_nav_mypage_icon_24
     )
 
-    fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.contact_Main,fragment)
-            .addToBackStack(null)
-            .commit()
-    }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-        Toast.makeText(dialog.context,"저장 됨", Toast.LENGTH_SHORT).show()
+        Toast.makeText(dialog.context, "저장 됨", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
-        Toast.makeText(dialog.context,"취소 됨", Toast.LENGTH_SHORT).show()
+        Toast.makeText(dialog.context, "취소 됨", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +39,6 @@ class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListene
         var tabLayout = binding.tabLayout
 
         viewPager.adapter = ViewPagerAdapter(this)
-
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitleArray[position]

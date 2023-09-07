@@ -32,8 +32,6 @@ class MyPageFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
     }
 
 
@@ -44,16 +42,6 @@ class MyPageFragment : Fragment() {
         _binding = FragmentMyPageBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.mypageBtnToEditPage.setOnClickListener {
-            val fragmentC = MypageEditFragment()
-            (requireActivity() as MainContactActivity).replaceFragment(fragmentC)
-
-//            Count.a = 1
-        }
     }
 
     override fun onDestroyView() {

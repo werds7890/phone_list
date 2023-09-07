@@ -25,6 +25,7 @@ private const val ARG_PARAM2 = "param2"
 class ContactDetailFragment : Fragment() {
     private lateinit var binding : FragmentContactDetailBinding
     private var position : Int= 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
