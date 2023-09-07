@@ -13,7 +13,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListener {
     private val binding by lazy { ActivityMainContactBinding.inflate(layoutInflater) }
 
-
     private val tabTitleArray = arrayOf(
         "연락처", "마이페이지"
     )
@@ -39,6 +38,7 @@ class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListene
         var tabLayout = binding.tabLayout
 
         viewPager.adapter = ViewPagerAdapter(this)
+
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitleArray[position]
