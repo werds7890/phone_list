@@ -1,6 +1,7 @@
 package com.example.phone_list
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -20,12 +21,13 @@ class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListene
         R.drawable.bottom_nav_mypage_icon_24
     )
 
+
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-        Toast.makeText(dialog.context,"저장 됨", Toast.LENGTH_SHORT).show()
+        Toast.makeText(dialog.context, "저장 됨", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
-        Toast.makeText(dialog.context,"취소 됨", Toast.LENGTH_SHORT).show()
+        Toast.makeText(dialog.context, "취소 됨", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

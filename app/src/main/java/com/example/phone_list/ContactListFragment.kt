@@ -1,22 +1,23 @@
 package com.example.phone_list
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.phone_list.databinding.ContactListViewBinding
-import kotlin.math.log
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -131,9 +132,9 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
     private var _binding: ContactListViewBinding? = null
     private val binding get() = _binding!!
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         val dialogResult = mutableListOf<String?>()
         setFragmentResultListener(DataKey.ADD_USER_NAME_KEY) { requestKey, bundle ->
@@ -169,7 +170,6 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
                 )
             )
         }
-
     }
 
 
@@ -177,26 +177,38 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         _binding = ContactListViewBinding.inflate(inflater, container, false) // Binding 초기화
         binding.fabAddUser.setOnClickListener {
             val showDialogFragment = ShowDialogFragment()
             showDialogFragment.show(parentFragmentManager, "addDialog")
         }
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContactListFragmentAdapter(dataList)
-        binding.recyclerView1.adapter = adapter
-        binding.recyclerView1.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView1.layoutManager = if (LayoutType.layoutType==0){ LinearLayoutManager(requireContext())} else{ GridLayoutManager(requireContext(),3)}
         binding.recyclerView1.addItemDecoration(DividerItemDecoration(requireContext(),LinearLayout.VERTICAL))
 
 
-        val detailFrag = ContactDetailFragment()
+        val adapter = ContactListFragmentAdapter(dataList)
+        binding.recyclerView1.adapter = adapter
 
+        // viewtype 수정 버튼
+        binding.notify.setOnClickListener {
+            var convertDesc = binding.notify.text
+            if (convertDesc.toString() == "Grid 형태로 보기"){binding.notify.text = "Linear형태로 보기"}else{binding.notify.text = "Grid 형태로 보기"}
+            if (LayoutType.layoutType == 0){LayoutType.layoutType = 1}else{LayoutType.layoutType = 0}
+            binding.recyclerView1.layoutManager = if (LayoutType.layoutType==0){ LinearLayoutManager(requireContext())} else{ GridLayoutManager(requireContext(),3)}
+            adapter.notifyDataSetChanged()
+        }
+
+        //
+        val detailFrag = ContactDetailFragment()
         adapter.itemClick = object : ContactListFragmentAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 Log.v("test", "click!!")
@@ -226,7 +238,6 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
             dataList[positionResult].userPhoneNum=numberResult!!
             adapter.notifyItemChanged(positionResult)
         }
-
     }
 
     override fun onDestroyView() {
