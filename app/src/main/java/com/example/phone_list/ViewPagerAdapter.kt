@@ -2,6 +2,7 @@ package com.example.phone_list
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import java.lang.IllegalArgumentException
 
