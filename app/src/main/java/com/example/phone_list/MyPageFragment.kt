@@ -95,10 +95,6 @@ class MyPageFragment : Fragment() {
             binding.mypageBtnToEditPage.visibility = View.VISIBLE
             binding.MyPage.visibility = View.VISIBLE
             binding.mypageBtnEditCancle.visibility = View.INVISIBLE
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
             binding.tvname.visibility = View.VISIBLE
             binding.nameEdit.visibility = View.GONE
