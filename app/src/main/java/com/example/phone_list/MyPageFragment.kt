@@ -12,28 +12,26 @@ import com.example.phone_list.databinding.FragmentMyPageBinding
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-private var _binding: FragmentMyPageBinding? = null
-private val binding get() = _binding!!
+
 
 /**
  * A simple [Fragment] subclass.
  * Use the [MyPageFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
 class MyPageFragment : Fragment() {
+    private lateinit var binding: FragmentMyPageBinding
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = FragmentMyPageBinding.inflate(layoutInflater)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
     }
 
 
@@ -41,26 +39,74 @@ class MyPageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMyPageBinding.inflate(inflater, container, false)
+        binding = FragmentMyPageBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mypageBtnToEditPage.setOnClickListener {
-            val fragmentC = MypageEditFragment()
-            (requireActivity() as MainContactActivity).replaceFragment(fragmentC)
 
-//            Count.a = 1
+        var name : String?=null
+        var mobile : String?=null
+        var email : String?=null
+
+        binding.mypageBtnToEditPage.setOnClickListener{
+            binding.mypageBtnSave.visibility = View.VISIBLE
+            binding.mypageBtnToEditPage.visibility = View.INVISIBLE
+            binding.MyPage.visibility = View.INVISIBLE
+            binding.mypageBtnEditCancle.visibility = View.VISIBLE
+
+            binding.tvname.visibility = View.GONE
+            binding.nameEdit.visibility = View.VISIBLE
+            binding.nameEdit.setText(binding.tvname.text)
+
+            binding.tvmobile.visibility = View.GONE
+            binding.mobileEdit.visibility = View.VISIBLE
+            binding.mobileEdit.setText(binding.tvmobile.text)
+
+            binding.tvemail.visibility = View.GONE
+            binding.emailEdit.visibility = View.VISIBLE
+            binding.emailEdit.setText(binding.tvemail.text)
+        }
+        binding.mypageBtnSave.setOnClickListener{
+            binding.mypageBtnToEditPage.visibility = View.VISIBLE
+            binding.mypageBtnSave.visibility = View.INVISIBLE
+            binding.MyPage.visibility = View.VISIBLE
+            binding.mypageBtnEditCancle.visibility = View.INVISIBLE
+
+            binding.tvname.visibility = View.VISIBLE
+            binding.nameEdit.visibility = View.GONE
+            binding.tvname.text = binding.nameEdit.text
+
+            binding.tvmobile.visibility = View.VISIBLE
+            binding.mobileEdit.visibility = View.GONE
+            binding.tvmobile.text = binding.mobileEdit.text
+
+            binding.tvemail.visibility = View.VISIBLE
+            binding.emailEdit.visibility = View.GONE
+            binding.tvemail.text = binding.emailEdit.text
+
+            name = binding.nameEdit.text.toString()
+            mobile = binding.mobileEdit.text.toString()
+            email = binding.emailEdit.text.toString()
+        }
+        binding.mypageBtnEditCancle.setOnClickListener{
+            binding.mypageBtnSave.visibility = View.INVISIBLE
+            binding.mypageBtnToEditPage.visibility = View.VISIBLE
+            binding.MyPage.visibility = View.VISIBLE
+            binding.mypageBtnEditCancle.visibility = View.INVISIBLE
+
+            binding.tvname.visibility = View.VISIBLE
+            binding.nameEdit.visibility = View.GONE
+
+            binding.tvmobile.visibility = View.VISIBLE
+            binding.mobileEdit.visibility = View.GONE
+
+            binding.tvemail.visibility = View.VISIBLE
+            binding.emailEdit.visibility = View.GONE
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -20,13 +20,6 @@ class MainContactActivity : AppCompatActivity(),ShowDialogFragment.DialogListene
         R.drawable.bottom_nav_mypage_icon_24
     )
 
-    fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.contact_Main,fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
     override fun onDialogPositiveClick(dialog: DialogFragment) {
         Toast.makeText(dialog.context,"저장 됨", Toast.LENGTH_SHORT).show()
     }
