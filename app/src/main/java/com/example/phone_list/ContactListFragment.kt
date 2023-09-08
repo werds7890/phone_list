@@ -156,10 +156,14 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
             }
             Log.d("TAG", "addNum: $dialogResult")
         }
-        setFragmentResultListener("modify") {requestKey, bundle ->
-            modify=bundle.getParcelable("modifyKey")
-        }
+//        setFragmentResultListener("modify") {requestKey, bundle ->
+//            modify=bundle.getParcelable("modifyKey")
+//            if(modify!=null){
+//                Log.v("test","suc")
+//            }
+//        }
         setFragmentResultListener(DataKey.ADD_USER_EMAIL_KEY) { requestKey, bundle ->
+            modify=bundle.getParcelable("modifyKey")
             if (dialogResult.size < 3) {
                 dialogResult.add(bundle.getString(DataKey.ADD_USER_EMAIL_KEY))
             } else {

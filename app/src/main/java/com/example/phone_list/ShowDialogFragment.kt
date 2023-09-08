@@ -86,11 +86,8 @@ class ShowDialogFragment : DialogFragment() {
                 )
                 setFragmentResult(
                     DataKey.ADD_USER_EMAIL_KEY,
-                    bundleOf(DataKey.ADD_USER_EMAIL_KEY to addEmail)
+                    bundleOf(DataKey.ADD_USER_EMAIL_KEY to addEmail, "modifyKey" to loadedImageUri)
                 )
-                setFragmentResult("modify", bundleOf(
-                    "modifyKey" to loadedImageUri
-                ))
                 dismiss()
             }
         }
