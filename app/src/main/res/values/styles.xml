@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DialogSaveButtonStyle" parent="ThemeOverlay.Material3.Button">
+        <item name="backgroundTint">@color/theme_color</item>
+        <item name="strokeColor">@color/button_stroke</item>
+        <item name="strokeWidth">3dp</item>
+    </style>
+
+    <style name="DialogCancelButtonStyle" parent="ThemeOverlay.Material3.Button">
+        <item name="backgroundTint">@color/white</item>
+        <item name="strokeColor">@color/theme_color</item>
+        <item name="strokeWidth">3dp</item>
+    </style>
+
+    <style name="tabTextSizeBold" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/yes24</item>
+    </style>
+</resources>
