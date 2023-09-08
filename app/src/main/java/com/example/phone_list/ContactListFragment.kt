@@ -1,5 +1,6 @@
 package com.example.phone_list
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,6 +36,8 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var modify : Uri?=null
+
     val dataList = mutableListOf<ContactListFragmentData>()
 
     init {
@@ -44,7 +47,7 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
                 "써니",
                 "01012345678",
                 "abcd1234@gamil.com",
-                false
+                false,
             )
         )
         dataList.add(
@@ -153,6 +156,9 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
             }
             Log.d("TAG", "addNum: $dialogResult")
         }
+        setFragmentResultListener("modify") {requestKey, bundle ->
+            modify=bundle.getParcelable("modifyKey")
+        }
         setFragmentResultListener(DataKey.ADD_USER_EMAIL_KEY) { requestKey, bundle ->
             if (dialogResult.size < 3) {
                 dialogResult.add(bundle.getString(DataKey.ADD_USER_EMAIL_KEY))
@@ -166,7 +172,9 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
                     dialogResult[0]!!,
                     dialogResult[1]!!,
                     dialogResult[2]!!,
-                    false
+                    false,
+                    false,
+                    modify
                 )
             )
         }
@@ -183,7 +191,6 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
             val showDialogFragment = ShowDialogFragment()
             showDialogFragment.show(parentFragmentManager, "addDialog")
         }
-
 
         return binding.root
     }
@@ -218,6 +225,7 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
                 bundle.putString("phoneNum", dataList[position].userPhoneNum)
                 bundle.putString("eMail", dataList[position].userEmail)
                 bundle.putBoolean("like", dataList[position].userIsLiked)
+                bundle.putParcelable("modify",dataList[position].modifyImg)
                 bundle.putInt("position",position)
 
                 val fragmentManager = requireActivity().supportFragmentManager
@@ -233,9 +241,12 @@ class ContactListFragment : Fragment(), ShowDialogFragment.DialogListener {
             val numberResult=bundle.getString("numberKey")
             val eMailResult=bundle.getString("eMailKey")
             val positionResult=bundle.getInt("positionKey")
+            val imgResult : Uri?=bundle.getParcelable("imgKey")
+
             dataList[positionResult].aname=nameResult!!
             dataList[positionResult].userEmail=eMailResult!!
             dataList[positionResult].userPhoneNum=numberResult!!
+            dataList[positionResult].modifyImg=imgResult
             adapter.notifyItemChanged(positionResult)
         }
     }
