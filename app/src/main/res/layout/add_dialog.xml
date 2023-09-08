@@ -34,6 +34,7 @@
         android:ems="10"
         android:hint="이름을 입력해주세요"
         android:inputType="text"
+        android:fontFamily="@font/yes24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_user_img" />
@@ -50,6 +51,7 @@
         android:ems="10"
         android:hint="전화번호를 입력해주세요"
         android:inputType="phone"
+        android:fontFamily="@font/yes24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_user_name" />
@@ -66,6 +68,7 @@
         android:ems="10"
         android:hint="이메일을 입력해주세요"
         android:inputType="textEmailAddress"
+        android:fontFamily="@font/yes24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_user_phoneNumber" />
