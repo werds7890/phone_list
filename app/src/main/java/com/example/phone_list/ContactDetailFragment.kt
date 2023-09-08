@@ -1,5 +1,6 @@
 package com.example.phone_list
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -144,6 +145,14 @@ class ContactDetailFragment : Fragment() {
 
         binding.detailCancel.setOnClickListener {
             fragmentManager?.popBackStack()
+        }
+
+        binding.call.setOnClickListener {
+            val intent= Intent(Intent.ACTION_DIAL)
+            val phoneNumber=binding.detailNumber.text.toString()
+            val num=Uri.parse("tel:${phoneNumber}")
+            intent.data=num
+            startActivity(intent)
         }
 
     }
