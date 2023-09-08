@@ -73,6 +73,9 @@ class ContactListFragmentAdapter(val mItems: MutableList<ContactListFragmentData
             0 -> {
                 (holder as Holder)
                 holder.iconImageView.setImageResource(mItems[position].profileImage)
+                if(mItems[position].modifyImg!=null){   //이미지 변경시(로드된 이미지가 있을경우 변경)
+                    holder.iconImageView.setImageURI(mItems[position].modifyImg)
+                }
                 holder.name.text = mItems[position].aname
                 // LikeImageView에 대한 클릭 이벤트 처리
                 holder.likeImageView.setOnClickListener {
@@ -137,6 +140,9 @@ class ContactListFragmentAdapter(val mItems: MutableList<ContactListFragmentData
         val likeImageView = binding.leftLikeImageView
         fun bind(item: ContactListFragmentData) {
             iconImageView.setImageResource(item.profileImage)
+            if(item.modifyImg!=null){
+                iconImageView.setImageURI(item.modifyImg)
+            }
             name.text = item.aname
         }
     }
@@ -147,6 +153,9 @@ class ContactListFragmentAdapter(val mItems: MutableList<ContactListFragmentData
         val name = binding.gridItemListTextName
         fun bind(item: ContactListFragmentData) {
             iconImageView.setImageResource(item.profileImage)
+            if(item.modifyImg!=null){
+                iconImageView.setImageURI(item.modifyImg)
+            }
             name.text = item.aname
         }
     }

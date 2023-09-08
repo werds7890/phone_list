@@ -1,5 +1,6 @@
 package com.example.phone_list
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.Log.e
@@ -7,9 +8,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResult
+import com.bumptech.glide.Glide
 import com.example.phone_list.databinding.FragmentContactDetailBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -24,6 +29,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class ContactDetailFragment : Fragment() {
     private lateinit var binding : FragmentContactDetailBinding
+    private var loadedImageUri : Uri?=null
     private var position : Int= 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,14 +48,26 @@ class ContactDetailFragment : Fragment() {
             val number=it.getString("phoneNum")
             val email=it.getString("eMail")
             position=it.getInt("position")
-            val like=it.getBoolean("like")
+            val modify : Uri?=it.getParcelable("modify")
 
             binding.detailName.text=name
             binding.detailImg.setImageResource(img)
             binding.detailNumber.text=number
             binding.detailEmail.text=email
+            if(modify!=null){
+                binding.detailImg.setImageURI(modify)
+            }
         }
         return binding.root
+    }
+
+
+    private lateinit var imageView: ImageView
+    private fun loadImage(uri:Uri) {
+        Glide.with(this)
+            .load(uri)
+            .into(imageView)
+            loadedImageUri=uri
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +75,20 @@ class ContactDetailFragment : Fragment() {
         var name : String?=null
         var number : String?=null
         var eMail : String?=null
+        var img : Uri?=null
+
+        imageView=binding.detailImg
+
+        val getImage=registerForActivityResult(ActivityResultContracts.GetContent()) {
+            uri: Uri? -> if(uri!=null){
+                loadImage(uri)
+            }
+        }
+
         binding.detailModify.setOnClickListener {
+
+            binding.imgModify.visibility=View.VISIBLE
+
             binding.save.visibility=View.VISIBLE
             binding.detailModify.visibility=View.INVISIBLE
 
@@ -73,7 +104,15 @@ class ContactDetailFragment : Fragment() {
             binding.editEmail.visibility=View.VISIBLE
             binding.editEmail.setText(binding.detailEmail.text)
         }
+
+        binding.imgModify.setOnClickListener {
+            getImage.launch("image/*")
+        }
+
         binding.save.setOnClickListener {
+            Toast.makeText(this.requireContext(),"저장이 완료됐습니다.",Toast.LENGTH_SHORT).show()
+            binding.imgModify.visibility=View.INVISIBLE
+
             binding.detailNumber.visibility=View.VISIBLE
             binding.editNumber.visibility=View.GONE
             binding.detailNumber.text=binding.editNumber.text
@@ -92,12 +131,14 @@ class ContactDetailFragment : Fragment() {
             eMail=binding.detailEmail.text.toString()
             name=binding.detailName.text.toString()
             number=binding.detailNumber.text.toString()
+            img=loadedImageUri
 
             setFragmentResult("key",bundleOf(
                 "nameKey" to name,
                 "numberKey" to number,
                 "eMailKey" to eMail,
                 "positionKey" to position,
+                "imgKey" to img
             ))
         }
 
